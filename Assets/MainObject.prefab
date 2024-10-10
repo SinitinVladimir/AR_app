@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae036e740f8adb488ebebc731aab29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 0}
+  playerAnimator: {fileID: 8317356644348671214}
 --- !u!1 &1005038973447640583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,8 +1097,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48fcfb60b90e6624badc62363fb2bdd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotationSpeed: 20
+  moveSpeed: 2
+  rotationSpeed: 5
   joystickBackground: {fileID: 850643080328308578}
   joystickHandle: {fileID: 850643079003907224}
 --- !u!54 &1137566601618867082
@@ -1703,8 +1703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedd3d1ba37a0ab49ad5c17fc502909f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotationSpeed: 20
+  moveSpeed: 2
+  rotationSpeed: 5
   movementAreaMin: {x: 100, y: 0, z: 150}
   movementAreaMax: {x: 0, y: 0, z: 0}
   stuckThreshold: 0.5
