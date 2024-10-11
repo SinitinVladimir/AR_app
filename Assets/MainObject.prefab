@@ -116,8 +116,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005038973447640583}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.40821788, y: 0.23456968, z: -0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 2.7320507, y: -1.4961369, z: 2.9218957}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 59.802814, y: 59.802807, z: 59.802822}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -471,8 +471,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7403318680399800999}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.40821788, y: 0.23456968, z: -0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 656.9012, y: 255.3422, z: 213.0436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 235.31073, y: 1, z: 177.25764}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1098,9 +1098,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotationSpeed: 5
+  rotationSpeed: 500
   joystickBackground: {fileID: 850643080328308578}
   joystickHandle: {fileID: 850643079003907224}
+  boundaryCenter: {x: 0, y: 0, z: 0}
+  boundaryRadius: 10
 --- !u!54 &1137566601618867082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1579,7 +1581,7 @@ PrefabInstance:
     - target: {fileID: 9003729180019094316, guid: c69f5b7d3e3ac2340a32c911737a7ee6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.70416546
+      value: -1.367579
       objectReference: {fileID: 0}
     - target: {fileID: 9003729180019094316, guid: c69f5b7d3e3ac2340a32c911737a7ee6,
         type: 3}
@@ -1704,7 +1706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotationSpeed: 5
+  rotationSpeed: 500
   movementAreaMin: {x: 100, y: 0, z: 150}
   movementAreaMax: {x: 0, y: 0, z: 0}
   stuckThreshold: 0.5
