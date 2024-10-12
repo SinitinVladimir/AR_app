@@ -18,6 +18,8 @@ public class PlaceOnExtendedPlane : MonoBehaviour
     private TouchControls controls;
     private bool isPressed;
 
+    private bool objectPlaced = false; // New flag to track if object has been placed
+
     private void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
@@ -29,23 +31,26 @@ public class PlaceOnExtendedPlane : MonoBehaviour
 
     private void Update()
     {
+        if (objectPlaced)  // Skip placement logic if the object is already placed
+            return;
+
         if (Pointer.current == null || !isPressed)
             return;
 
         var touchPosition = Pointer.current.position.ReadValue();
 
-        // Ищем реальную плоскость на берегу
+        // Check for plane hit
         if (raycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
         {
             var hitPose = hits[0].pose;
-            lastPlanePosition = hitPose.position; // Запоминаем позицию плоскости на берегу
+            lastPlanePosition = hitPose.position; // Store last plane position
             isPlaneFound = true;
 
             PlaceObject(hitPose);
         }
         else if (isPlaneFound)
         {
-            // Если плоскость найдена на берегу, расширяем её на воду
+            // Extend the plane over water if the plane was found previously
             Vector3 extendedPosition = ExtendPlaneOverWater(touchPosition);
             PlaceObject(new Pose(extendedPosition, Quaternion.identity));
         }
@@ -53,15 +58,14 @@ public class PlaceOnExtendedPlane : MonoBehaviour
 
     private Vector3 ExtendPlaneOverWater(Vector2 touchPosition)
     {
-        // Преобразуем координаты касания в луч
+        // Extend the position based on water surface
         Ray ray = Camera.main.ScreenPointToRay(touchPosition);
-        Vector3 waterPlaneNormal = Vector3.up; // Вектор нормали плоскости воды
+        Vector3 waterPlaneNormal = Vector3.up; // Flat water plane normal
 
-        // Определим новую позицию по касательной к воде
+        // Project a plane at last known plane position
         Plane waterPlane = new Plane(waterPlaneNormal, lastPlanePosition);
         waterPlane.Raycast(ray, out float distanceToWater);
 
-        // Возвращаем позицию на воде
         return ray.GetPoint(distanceToWater);
     }
 
@@ -69,18 +73,41 @@ public class PlaceOnExtendedPlane : MonoBehaviour
     {
         if (spawnedObject == null)
         {
+            // Place the object for the first time
             spawnedObject = Instantiate(placedPrefab, pose.position, pose.rotation);
+
+            // Disable plane detection after placing the object
+            DisablePlaneDetection();
         }
         else
         {
+            // Update object position and rotation if already placed
             spawnedObject.transform.position = pose.position;
             spawnedObject.transform.rotation = pose.rotation;
         }
 
-        // Объект всегда будет смотреть на камеру
+        // Make the object look at the camera
         Vector3 lookPos = Camera.main.transform.position - spawnedObject.transform.position;
         lookPos.y = 0;
         spawnedObject.transform.rotation = Quaternion.LookRotation(lookPos);
+    }
+
+    private void DisablePlaneDetection()
+    {
+        // Disable further plane detection and object placement
+        objectPlaced = true;
+        raycastManager.enabled = false;
+
+        // Optionally disable all existing planes (invisible)
+        ARPlaneManager planeManager = GetComponent<ARPlaneManager>();
+        if (planeManager != null)
+        {
+            planeManager.enabled = false;
+            foreach (var plane in planeManager.trackables)
+            {
+                plane.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnEnable()

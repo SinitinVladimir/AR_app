@@ -9,10 +9,11 @@ public class MyBoat : MonoBehaviour
     public float rotationSpeed = 200f;  // Set your rotation speed
     public RectTransform joystickBackground; // Assign the background of your joystick UI
     public RectTransform joystickHandle; // Assign the handle of your joystick UI
-    
+    public float strokeDuration = 3.6f;
+
     private Vector2 joystickInput; // Store joystick movement
     private TouchControls controls;
-
+    
     private void Awake()
     {
         controls = new TouchControls();
@@ -61,8 +62,16 @@ public class MyBoat : MonoBehaviour
             Vector3 direction = new Vector3(joystickInput.x, 0, joystickInput.y);
 
             // Move the boat based on joystick input and moveSpeed
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
 
+            // For not linear movements
+
+            //float paddlePower = Mathf.Max(0, Mathf.Sin((Time.time - 1) / strokeDuration * Mathf.PI * 2));
+            //transform.Translate(direction * moveSpeed * paddlePower * Time.deltaTime, Space.World);
+            
+            //For linear movements
+
+            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+            
             // Apply 180-degree offset to the rotation so the boat's nose stays in front
             Quaternion targetRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);

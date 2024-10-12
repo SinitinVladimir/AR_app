@@ -6,7 +6,7 @@ public class BoatAIMovement : MonoBehaviour
     public float minSpeed = 0.1f;      // Minimum movement speed for the AI boat
     public float maxSpeed = 2.0f;      // Maximum movement speed for the AI boat
     public float distanceFactor = 0.5f; // Factor by which distance affects speed
-    public float rightOffset = 3.0f;    // Offset for the AI boat to stay on the player's right side
+    public float rightOffset = 6.0f;    // Offset for the AI boat to stay on the player's right side
     public float positionTolerance = 0.1f; // Allowed tolerance before updating the target position
 
     private Vector3 targetPos;         // Target position for the AI boat to move towards

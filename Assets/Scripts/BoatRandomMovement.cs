@@ -4,7 +4,7 @@ public class BoatRandomMovement : MonoBehaviour
 {
     public float moveSpeed = 0.1f;       // Скорость движения лодки
     public float maxHorizontalXOffset = 2.0f; // Максимальное отклонение от начальной точки по X
-    public float maxHorizontalZOffset = 1.0f; // Максимальное отклонение от начальной точки по Z
+    public float maxHorizontalYOffset = 1.0f; // Максимальное отклонение от начальной точки по Y
 
     private Vector3 startPos;            // Начальная позиция лодки
     private Vector3 targetPos;           // Целевая позиция для движения
@@ -33,8 +33,8 @@ public class BoatRandomMovement : MonoBehaviour
     {
         // Рассчитываем случайное отклонение по оси X
         float randomX = Random.Range(-maxHorizontalXOffset, maxHorizontalXOffset);
-        float randomZ = Random.Range(-maxHorizontalZOffset, maxHorizontalZOffset);
+        float randomY = Random.Range(-maxHorizontalYOffset, maxHorizontalYOffset);
         // Новая целевая позиция — это смещение от начальной позиции по оси X
-        targetPos = new Vector3(startPos.x + randomX, startPos.y, startPos.z + randomZ);
+        targetPos = new Vector3(startPos.x + randomX, startPos.y, startPos.z);
     }
 }

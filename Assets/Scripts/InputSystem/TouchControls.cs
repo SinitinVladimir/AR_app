@@ -41,7 +41,7 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fac80a13-6576-4566-8207-d87d05fd952c"",
-                    ""path"": ""<Pointer>/press"",
+                    ""path"": ""<Pointer>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
