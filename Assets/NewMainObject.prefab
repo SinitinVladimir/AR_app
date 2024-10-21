@@ -30,8 +30,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8832163616308024722}
-  - {fileID: 3401301151622449610}
   - {fileID: 4168850053340658034}
+  - {fileID: 3401301151622449610}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5009936664056141272
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae036e740f8adb488ebebc731aab29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 1161993523661280974}
+  playerAnimator: {fileID: 0}
 --- !u!1 &8417071004255360406
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 8, y: 180}
+  m_AnchoredPosition: {x: -568, y: 180}
   m_SizeDelta: {x: 50.7454, y: 17.2355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3520073355820641977
@@ -789,7 +789,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5435386842356778425, guid: c69f5b7d3e3ac2340a32c911737a7ee6, type: 3}
     m_RemovedGameObjects:
     - {fileID: 565183887638777030, guid: c69f5b7d3e3ac2340a32c911737a7ee6, type: 3}
     m_AddedGameObjects:
@@ -904,6 +905,7 @@ MonoBehaviour:
   rotationSpeed: 5
   joystickBackground: {fileID: 2597891124997572857}
   joystickHandle: {fileID: 2597891124713360131}
+  strokeDuration: 3.6
 --- !u!54 &1212849612056635578
 Rigidbody:
   m_ObjectHideFlags: 0
