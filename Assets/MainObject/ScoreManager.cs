@@ -1,17 +1,14 @@
-using TMPro; // Make sure to import TextMeshPro
+using TMPro;
 using UnityEngine;
-
 
 public class ScoreManager : MonoBehaviour
 {
     public int playerScore = 0;
     public int botScore = 0;
 
-    // References to the TMP Text components
-    public TMP_Text playerScoreText;
-    public TMP_Text botScoreText;
+    public TMP_Text scoreText; // Reference to the score display text
 
-    void Start()
+    public void Start()
     {
         // Initialize the UI with the starting scores
         UpdateScoreUI();
@@ -21,21 +18,34 @@ public class ScoreManager : MonoBehaviour
     {
         playerScore++;
         UpdateScoreUI();
+        CheckGameOver();
     }
 
     public void AddPointToBot()
     {
         botScore++;
         UpdateScoreUI();
+        CheckGameOver();
     }
 
-    private void UpdateScoreUI()
+    public void UpdateScoreUI()
     {
-        // Update the TMP UI text with the current scores
-        if (playerScoreText != null)
-            playerScoreText.text = "Player: " + playerScore;
-
-        if (botScoreText != null)
-            botScoreText.text = "Bot: " + botScore;
+        if (scoreText != null)
+        {
+            scoreText.text = "Player: " + playerScore + "\nBot: " + botScore;
+        }
     }
+
+    private void CheckGameOver()
+    {
+        if (playerScore >= 4)
+        {
+            Debug.Log("Player wins by reaching 4 points.");
+        }
+        else if (botScore >= 4)
+        {
+            Debug.Log("Bot wins by reaching 4 points.");
+        }
+    }
+
 }
