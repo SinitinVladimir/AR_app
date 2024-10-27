@@ -5,22 +5,22 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
     public ScoreManager scoreManager;
-    public Button restartButton;          // Reference to the Restart Button
-    public Animator playerAnimator;       // Animator for the player's boat
-    public Animator botAnimator;          // Animator for the bot's boat
+    public Button restartButton;   
+    public Animator playerAnimator;
+    public Animator botAnimator;  
 
     private bool isGameOver = false;
+    private bool playerDefeated = false; // Track which entity is defeated
 
     private void Start()
     {
-        // Set the Restart Button to inactive initially
         restartButton.gameObject.SetActive(false);
-        restartButton.onClick.AddListener(RestartGame);  // Add listener for the restart button
+        restartButton.onClick.AddListener(RestartGame); 
     }
 
     private void Update()
     {
-        if (!isGameOver && (scoreManager.playerScore >= 4 || scoreManager.botScore >= 4))
+        if (!isGameOver && (scoreManager.playerScore >= 2 || scoreManager.botScore >= 2))
         {
             StartCoroutine(GameOver());
         }
@@ -30,34 +30,36 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
 
-        // Trigger the fall animation for the loser
-        if (scoreManager.playerScore >= 4 && botAnimator != null)
+        // Determine the defeated entity and set the appropriate "Fall" trigger
+        if (scoreManager.playerScore >= 2 && botAnimator != null)
         {
-            botAnimator.SetTrigger("Fall");  // Set the "Fall" trigger for the bot
+            botAnimator.SetTrigger("Fall");  // Bot is defeated
+            playerDefeated = false;
         }
-        else if (scoreManager.botScore >= 4 && playerAnimator != null)
+        else if (scoreManager.botScore >= 2 && playerAnimator != null)
         {
-            playerAnimator.SetTrigger("Fall");  // Set the "Fall" trigger for the player
+            playerAnimator.SetTrigger("Fall");  // Player is defeated
+            playerDefeated = true;
         }
 
-        // Wait until the "Fall" animation has completed
+        // Wait until the "Fall" animation has completed for the defeated entity
         yield return new WaitUntil(() =>
         {
-            if (scoreManager.playerScore >= 4 && botAnimator != null)
+            if (playerDefeated)
             {
-                return botAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !botAnimator.IsInTransition(0);
+                return playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("DramaticFall") && 
+                       playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && 
+                       !playerAnimator.IsInTransition(0);
             }
-            else if (scoreManager.botScore >= 4 && playerAnimator != null)
+            else
             {
-                return playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !playerAnimator.IsInTransition(0);
+                return botAnimator.GetCurrentAnimatorStateInfo(0).IsName("DramaticFall") && 
+                       botAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && 
+                       !botAnimator.IsInTransition(0);
             }
-            return false;
         });
 
-        // // Wait for an additional 2 seconds
-        // yield return new WaitForSeconds(2f);
-
-        // Freeze the game
+        // Freeze the game immediately after the animation completes
         Time.timeScale = 0f;
 
         // Show the Restart Button
@@ -66,8 +68,15 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        botAnimator.SetTrigger("Restart"); // Set the "Restart" trigger
-        playerAnimator.SetTrigger("Restart"); // Set the "Restart" trigger
+        // Only set the "Restart" trigger for the defeated entity
+        if (playerDefeated)
+        {
+            playerAnimator.SetTrigger("Restart"); 
+        }
+        else
+        {
+            botAnimator.SetTrigger("Restart"); 
+        }
 
         // Reset the scores
         scoreManager.playerScore = 0;

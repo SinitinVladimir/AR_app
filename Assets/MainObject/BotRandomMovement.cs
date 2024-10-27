@@ -3,7 +3,7 @@ using UnityEngine;
 public class BotBoatMovement : MonoBehaviour
 {
     public Transform playerBoat;            // Player's boat to follow
-    public float moveSpeed = 4f;            // Movement speed for the bot boat
+    public float moveSpeed = 3f;            // Movement speed for the bot boat
     public float rotationSpeed = 40f;       // Speed of rotation for the bot boat
     public float followDistance = 6f;       // Distance to maintain from the player boat
 
