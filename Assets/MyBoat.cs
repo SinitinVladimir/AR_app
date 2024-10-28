@@ -4,18 +4,16 @@ using UnityEngine.UI;
 
 public class MyBoat : MonoBehaviour
 {
+    
     public float moveSpeed = 550f;  // Set your move speed
     public float rotationSpeed = 200f;  // Set your rotation speed
     public RectTransform joystickBackground; // Assign the background of your joystick UI
     public RectTransform joystickHandle; // Assign the handle of your joystick UI
-    
+    public float strokeDuration = 3.6f;
+
     private Vector2 joystickInput; // Store joystick movement
     private TouchControls controls;
-
-    // Define the center point and boundary radius
-    public Vector3 boundaryCenter = Vector3.zero;  // You can set this to any point you like
-    public float boundaryRadius = 10f;  // Limit to 10 meters
-
+    
     private void Awake()
     {
         controls = new TouchControls();
@@ -64,31 +62,19 @@ public class MyBoat : MonoBehaviour
             Vector3 direction = new Vector3(joystickInput.x, 0, joystickInput.y);
 
             // Move the boat based on joystick input and moveSpeed
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
 
+            // For not linear movements
+
+            //float paddlePower = Mathf.Max(0, Mathf.Sin((Time.time - 1) / strokeDuration * Mathf.PI * 2));
+            //transform.Translate(direction * moveSpeed * paddlePower * Time.deltaTime, Space.World);
+            
+            // For linear movements
+
+            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+            
             // Apply 180-degree offset to the rotation so the boat's nose stays in front
             Quaternion targetRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-            // Clamp the position within the boundary
-            Vector3 clampedPosition = ClampPositionToBoundary(transform.position);
-            transform.position = clampedPosition;
         }
-    }
-
-    // Method to clamp the boat's position to the boundary
-    private Vector3 ClampPositionToBoundary(Vector3 currentPosition)
-    {
-        // Calculate the offset from the center
-        Vector3 offsetFromCenter = currentPosition - boundaryCenter;
-
-        // If the offset exceeds the boundary radius, clamp it
-        if (offsetFromCenter.magnitude > boundaryRadius)
-        {
-            offsetFromCenter = offsetFromCenter.normalized * boundaryRadius;  // Clamp to the edge of the boundary
-        }
-
-        // Return the clamped position
-        return boundaryCenter + offsetFromCenter;
     }
 }
