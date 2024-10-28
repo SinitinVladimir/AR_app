@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BotAnimationController : MonoBehaviour
@@ -21,7 +22,15 @@ public class BotAnimationController : MonoBehaviour
         // When the timer runs out, trigger an attack and reset the timer
         if (attackTimer <= 0f)
         {
-            Attack();
+            if (botAnimator.GetCurrentAnimatorStateInfo(0).IsName("Fall"))
+            {
+                StartCoroutine(WaitAndAttack(2f));
+            }
+            else
+            {
+                Attack();
+            }
+            
             // Reset the timer to a new random value between min and max interval
             attackTimer = Random.Range(minAttackInterval, maxAttackInterval);
         }
@@ -31,5 +40,11 @@ public class BotAnimationController : MonoBehaviour
     {
         // Trigger the attack animation
         botAnimator.SetTrigger("AttackTrigger");
+    }
+
+    private IEnumerator WaitAndAttack(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Attack();
     }
 }

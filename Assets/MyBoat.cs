@@ -4,19 +4,25 @@ using UnityEngine.UI;
 
 public class MyBoat : MonoBehaviour
 {
-    
-    public float moveSpeed = 550f;  // Set your move speed
-    public float rotationSpeed = 200f;  // Set your rotation speed
+    public float moveSpeed = 4f;  // Set your move speed
+    public float rotationSpeed = 40f;  // Set your rotation speed
     public RectTransform joystickBackground; // Assign the background of your joystick UI
     public RectTransform joystickHandle; // Assign the handle of your joystick UI
     public float strokeDuration = 3.6f;
 
     private Vector2 joystickInput; // Store joystick movement
     private TouchControls controls;
-    
+    private Vector3 initialPosition; // Starting position for boundary constraint
+
     private void Awake()
     {
         controls = new TouchControls();
+    }
+
+    private void Start()
+    {
+        // Store the initial position of the boat
+        initialPosition = transform.position;
     }
 
     private void OnEnable()
@@ -61,20 +67,24 @@ public class MyBoat : MonoBehaviour
         {
             Vector3 direction = new Vector3(joystickInput.x, 0, joystickInput.y);
 
-            // Move the boat based on joystick input and moveSpeed
+            // Calculate the potential new position with movement applied
+            Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
 
-            // For not linear movements
+            // Check if the new position exceeds 20 meters from the initial position
+            if (Vector3.Distance(newPosition, initialPosition) <= 20f)
+            {
+                // Update position if within boundary
+                transform.position = newPosition;
 
-            //float paddlePower = Mathf.Max(0, Mathf.Sin((Time.time - 1) / strokeDuration * Mathf.PI * 2));
-            //transform.Translate(direction * moveSpeed * paddlePower * Time.deltaTime, Space.World);
-            
-            // For linear movements
-
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-            
-            // Apply 180-degree offset to the rotation so the boat's nose stays in front
-            Quaternion targetRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                // Apply 180-degree offset to the rotation so the boat's nose stays in front
+                Quaternion targetRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                // Optional: adjust position back within bounds if it slightly exceeds
+                transform.position = Vector3.MoveTowards(transform.position, initialPosition, moveSpeed * Time.deltaTime);
+            }
         }
     }
 }

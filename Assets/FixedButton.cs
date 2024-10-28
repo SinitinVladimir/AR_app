@@ -8,6 +8,7 @@ public class FixedButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     // This method will be called when the button is pressed down
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Button pressed finally!");
         // Trigger the attack animation when the button is pressed
         playerAnimator.SetTrigger("AttackTrigger");
     }

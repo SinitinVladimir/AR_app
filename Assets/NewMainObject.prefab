@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceSouthWest: 50
-  dropHeight: 4
+  dropHeight: 6
 --- !u!1 &6108231625949281518
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +212,6 @@ GameObject:
   - component: {fileID: 2444063656415278413}
   - component: {fileID: 8469685774141241279}
   - component: {fileID: 3439412046030622447}
-  - component: {fileID: 5802138995819409612}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -277,19 +276,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5802138995819409612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7429381340844609608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae036e740f8adb488ebebc731aab29a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 1161993523661280974}
 --- !u!1 &8417071004255360406
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48fcfb60b90e6624badc62363fb2bdd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 6
   rotationSpeed: 5
   joystickBackground: {fileID: 2597891124997572857}
   joystickHandle: {fileID: 2597891124713360131}
@@ -912,7 +898,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6250939602205765150}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1830,7 +1816,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8679502073074260671}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
