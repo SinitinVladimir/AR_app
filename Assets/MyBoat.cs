@@ -71,7 +71,7 @@ public class MyBoat : MonoBehaviour
             Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
 
             // Check if the new position exceeds 20 meters from the initial position
-            if (Vector3.Distance(newPosition, initialPosition) <= 20f)
+            if (Vector3.Distance(newPosition, initialPosition) <= 25f)
             {
                 // Update position if within boundary
                 transform.position = newPosition;
