@@ -90,6 +90,32 @@ Manages the sequential conditions of AR object placement (location, image, and p
 - **DisableAllTracking**: Turns off GPS, image, and plane tracking after placement.
 
 ---
+### **PlaceBoatOnShoreWithCompass.cs**
+The `PlaceBoatOnShoreWithCompass` script controls the precise GPS-based placement of a boat on the shore and uses a compass to help orient the placement.
+
+- **Awake**:
+   - Initializes the AR raycast manager and checks for location permissions.
+   - Enables the device’s compass and starts GPS location tracking with `StartGPS`.
+   
+- **StartGPS**:
+   - Begins GPS tracking, waits for initialization, and checks the device's location availability.
+   - Sets the initial latitude and longitude if the GPS status is successful, allowing the script to monitor distance to the target.
+   
+- **CheckDistanceToTarget**:
+   - Continuously checks the distance between the user’s current location and the target GPS point.
+   - If within `spawnRadius` (37 meters), it triggers the `PlaceObject` method to instantiate the boat at a specified position.
+   - Pauses checks when the user is within `checkRadius` but outside the spawn radius, periodically logging the distance.
+   
+- **CalculateDistance**:
+   - Uses the Haversine formula to calculate the distance between two geographical points.
+   
+- **PlaceObject**:
+   - Instantiates the boat prefab at the desired location when the target distance condition is met.
+   
+- **OnDestroy**:
+   - Disables the compass when the script instance is destroyed to save device resources.
+
+---
 
 ### **GameManager.cs**
 Handles game state, game-over conditions, and restart functionality.
